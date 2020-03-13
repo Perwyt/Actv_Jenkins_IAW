@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Actv. Jenkins</title>
+</head>
+<body>
+<form>
+    a <input type="number" id="valorA"/> <br> <br>
+    b <input type="number" id="valorB"/> <br> <br>
+    c <input type="number" id="valorC"/> <br> <br>
+    <input type="submit" id="submit" value="Enviar">
+</form>
+<br>
+
+<table border="1px" id="tabla">
+    <tr>
+        <th>x</th>
+        <th>y</th>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+
+    var enviarinfo = document.getElementById("submit");
+    enviarinfo.addEventListener("click",sendValues);
+
+    function sendValues() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST","ejerfinal.php",true);
+        var a = document.getElementById("valorA").value;
+        var b = document.getElementById("valorB").value;
+        var c = document.getElementById("valorC").value;
+        xhr.onreadystatechange = function(){
+            if ((xhr.status === 200) && (xhr.readyState === 4)){
+                console.log(xhr.response);
+                document.getElementById("tabla").innerHTML+=xhr.response;
+                }
+            };
+        xhr.send(JSON.stringify({a,b,c}));
+
+    }
+</script>
+</body>
+</html>
